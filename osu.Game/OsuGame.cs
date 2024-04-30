@@ -190,6 +190,8 @@ namespace osu.Game
         [CanBeNull]
         private IntroScreen introScreen;
 
+        //private bool bossModeState;
+
         private Bindable<string> configRuleset;
 
         private Bindable<bool> applySafeAreaConsiderations;
@@ -387,6 +389,8 @@ namespace osu.Game
 
             applySafeAreaConsiderations = LocalConfig.GetBindable<bool>(OsuSetting.SafeAreaConsiderations);
             applySafeAreaConsiderations.BindValueChanged(apply => SafeAreaContainer.SafeAreaOverrideEdges = apply.NewValue ? SafeAreaOverrideEdges : Edges.All, true);
+
+            //bossModeState = false;
         }
 
         private ExternalLinkOpener externalLinkOpener;
@@ -1341,6 +1345,9 @@ namespace osu.Game
             return component;
         }
 
+        //bool isSubscribed = false;
+
+
         public bool OnPressed(KeyBindingPressEvent<GlobalAction> e)
         {
             if (e.Repeat)
@@ -1383,6 +1390,35 @@ namespace osu.Game
                         return false;
 
                     SkinManager.SelectRandomSkin();
+                    return true;
+
+                case GlobalAction.BossKey:
+
+                    /*if (ScreenStack.CurrentScreen is IntroScreen || bossModeState)
+                        return false;
+
+                    if (taskbar == null)
+                        return false;
+
+                    if (!isSubscribed)
+                    {
+                        isSubscribed = true;
+                        taskbar.OnClickNotifyIconEvent += (sender, e) =>
+                        {
+                            Window.Show(taskbar);
+                            isSubscribed = false;
+                            bossModeState = false;
+
+                            Scheduler.Add(new ScheduledDelegate(() => volume.Adjust(GlobalAction.ToggleMute)));
+                        };
+                    }
+
+                    Window.Hide(taskbar);
+
+                    bossModeState = true;
+
+                    Scheduler.Add(new ScheduledDelegate(() => volume.Adjust(GlobalAction.ToggleMute)));*/
+
                     return true;
             }
 

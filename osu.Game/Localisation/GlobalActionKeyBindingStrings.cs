@@ -70,6 +70,11 @@ namespace osu.Game.Localisation
         public static LocalisableString TakeScreenshot => new TranslatableString(getKey(@"take_screenshot"), @"Take screenshot");
 
         /// <summary>
+        /// "Boss key"
+        /// </summary>
+        public static LocalisableString BossKey => new TranslatableString(getKey(@"boss_key"), @"Boss key");
+
+        /// <summary>
         /// "Toggle gameplay mouse buttons"
         /// </summary>
         public static LocalisableString ToggleGameplayMouseButtons => new TranslatableString(getKey(@"toggle_gameplay_mouse_buttons"), @"Toggle gameplay mouse buttons");
