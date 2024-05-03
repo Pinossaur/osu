@@ -8,19 +8,20 @@ using System.Reflection;
 using System.Runtime.Versioning;
 using Microsoft.Win32;
 using osu.Desktop.Performance;
+using osu.Desktop.Platform;
 using osu.Desktop.Security;
+using osu.Desktop.Updater;
+using osu.Desktop.Windows;
+using osu.Framework;
+using osu.Framework.Allocation;
+using osu.Framework.Logging;
 using osu.Framework.Platform;
 using osu.Game;
-using osu.Desktop.Updater;
-using osu.Framework;
-using osu.Framework.Logging;
-using osu.Game.Updater;
-using osu.Desktop.Windows;
-using osu.Framework.Allocation;
 using osu.Game.IO;
 using osu.Game.IPC;
 using osu.Game.Online.Multiplayer;
 using osu.Game.Performance;
+using osu.Game.Updater;
 using osu.Game.Utils;
 using SDL;
 
@@ -141,8 +142,11 @@ namespace osu.Desktop
             LoadComponentAsync(new DiscordRichPresence(), Add);
 
             if (RuntimeInfo.OS == RuntimeInfo.Platform.Windows)
+            {
                 LoadComponentAsync(new GameplayWinKeyBlocker(), Add);
-
+                LoadComponentAsync(new BossKeyManager(), Add);
+            }
+                
             LoadComponentAsync(new ElevatedPrivilegesChecker(), Add);
 
             osuSchemeLinkIPCChannel = new OsuSchemeLinkIPCChannel(Host, this);
