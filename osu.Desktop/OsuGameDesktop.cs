@@ -23,7 +23,7 @@ using osu.Game.Online.Multiplayer;
 using osu.Game.Performance;
 using osu.Game.Updater;
 using osu.Game.Utils;
-using SDL;
+using SDL2;
 
 namespace osu.Desktop
 {
@@ -165,7 +165,7 @@ namespace osu.Desktop
             host.Window.Title = Name;
         }
 
-        protected override BatteryInfo CreateBatteryInfo() => new SDL3BatteryInfo();
+        protected override BatteryInfo CreateBatteryInfo() => new SDL2BatteryInfo();
 
         protected override void Dispose(bool isDisposing)
         {
@@ -174,14 +174,13 @@ namespace osu.Desktop
             archiveImportIPCChannel?.Dispose();
         }
 
-        private unsafe class SDL3BatteryInfo : BatteryInfo
+        private class SDL2BatteryInfo : BatteryInfo
         {
             public override double? ChargeLevel
             {
                 get
                 {
-                    int percentage;
-                    SDL3.SDL_GetPowerInfo(null, &percentage);
+                    SDL.SDL_GetPowerInfo(out _, out int percentage);
 
                     if (percentage == -1)
                         return null;
@@ -190,7 +189,7 @@ namespace osu.Desktop
                 }
             }
 
-            public override bool OnBattery => SDL3.SDL_GetPowerInfo(null, null) == SDL_PowerState.SDL_POWERSTATE_ON_BATTERY;
+            public override bool OnBattery => SDL.SDL_GetPowerInfo(out _, out _) == SDL.SDL_PowerState.SDL_POWERSTATE_ON_BATTERY;
         }
     }
 }
